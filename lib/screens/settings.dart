@@ -8,7 +8,7 @@ class Settings extends ConsumerWidget{
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Device device = ref.watch(deviceProvider);
+    Device device = ref.watch(deviceProvider.notifier);
     return Scaffold(
       body: Center(
         child: Column(
@@ -23,10 +23,8 @@ class Settings extends ConsumerWidget{
                 labelText: 'Color',
             ),
                 onChanged: (value) {
-                  print(value);
                   if (value.isEmpty || value.length != 6) return;
-                  print("Changing theme to $value");
-                  ref.read(deviceProvider).setTheme(value);
+                  ref.read(deviceProvider.notifier).setTheme(value);
                 },
             ),
             Footer(),

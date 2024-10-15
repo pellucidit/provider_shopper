@@ -6,12 +6,12 @@ part of 'device.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$deviceHash() => r'ff3ccde3f1dda628006d5459ac1e40b276ad42c8';
+String _$deviceHash() => r'b1cadb3700835a09026d6a458b00b149ac47a271';
 
-/// See also [device].
-@ProviderFor(device)
-final deviceProvider = AutoDisposeProvider<Device>.internal(
-  device,
+/// See also [Device].
+@ProviderFor(Device)
+final deviceProvider = NotifierProvider<Device, Color>.internal(
+  Device.new,
   name: r'deviceProvider',
   debugGetCreateSourceHash:
       const bool.fromEnvironment('dart.vm.product') ? null : _$deviceHash,
@@ -19,6 +19,6 @@ final deviceProvider = AutoDisposeProvider<Device>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef DeviceRef = AutoDisposeProviderRef<Device>;
+typedef _$Device = Notifier<Color>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

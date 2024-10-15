@@ -8,7 +8,7 @@ class Footer extends ConsumerWidget {
   @override 
   Widget build(BuildContext context, WidgetRef ref) {
 
-    Device device = ref.watch(deviceProvider);
+    Device device = ref.watch(deviceProvider.notifier);
 
     return Card(
       color: device.getThemeAsColor(),

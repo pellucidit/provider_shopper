@@ -4,21 +4,21 @@ import 'package:flutter/material.dart';
 
 part 'device.g.dart';
 
-@riverpod
-Device device(DeviceRef ref) => Device(theme: "32332A");
+@Riverpod(keepAlive: true)
+class Device extends _$Device {
 
-class Device {
-  Device({required this.theme});
-  
-  String theme;
+  @override
+  Color build() { 
+    return Color(int.parse("FFffffff", radix: 16));
+  }
 
   void setTheme(String theme) {
-    this.theme = theme;
+    state = Color(int.parse("ff$theme", radix: 16));
+    print("Changed theme to $theme");
   }
 
   Color getThemeAsColor() {
-    Color color = Color(int.parse(theme, radix: 16));
-    print(color);
-    return color;
+    print("theme is $state");
+    return state;
   }
 }
