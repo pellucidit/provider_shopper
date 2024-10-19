@@ -21,7 +21,7 @@ void main() {
   runApp(ProviderScope(child: const MyApp()));
 }
 
-const double windowWidth = 400;
+const double windowWidth = 800;
 const double windowHeight = 800;
 
 void setupWindow() {
@@ -42,7 +42,7 @@ void setupWindow() {
 
 GoRouter router() {
   return GoRouter(
-    initialLocation: '/settings',
+    initialLocation: '/login',
     routes: [
       GoRoute(
         path: '/login',

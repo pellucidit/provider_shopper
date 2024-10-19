@@ -4,7 +4,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../common/footer.dart';
 
 
 class MyLogin extends StatelessWidget {
@@ -13,6 +12,12 @@ class MyLogin extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Login'),
+        actions: [
+          IconButton(icon: const Icon(Icons.settings), onPressed: () {context.pushReplacement('/settings');})
+        ],
+      ),
       body: Center(
         child: Container(
           padding: const EdgeInsets.all(80.0),
@@ -46,7 +51,6 @@ class MyLogin extends StatelessWidget {
                 ),
                 child: const Text('ENTER'),
               ),
-              Footer(),
             ],
           ),
         ),

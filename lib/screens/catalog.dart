@@ -7,7 +7,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_shopper/models/cart.dart';
 import 'package:provider_shopper/models/catalog.dart';
-import '../common/footer.dart';
 
 
 class MyCatalog extends StatelessWidget {
@@ -16,6 +15,12 @@ class MyCatalog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text('Catalog'),
+        actions: [
+          IconButton(icon: const Icon(Icons.settings), onPressed: () {context.pushReplacement('/settings');})
+        ],
+      ),
       body: CustomScrollView(
         slivers: [
           _MyAppBar(),
@@ -24,7 +29,6 @@ class MyCatalog extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
                 (context, index) => _MyListItem(index)),
           ),
-          Footer(),
         ],
       ),
     );

@@ -4,8 +4,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider_shopper/provider.dart';
-import '../common/footer.dart';
 
 class MyCart extends StatelessWidget {
   const MyCart({super.key});
@@ -14,8 +14,11 @@ class MyCart extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart', style: Theme.of(context).textTheme.displayLarge),
-        backgroundColor: Colors.white,
+        title: const Text('Cart'),
+        actions: [
+          IconButton(icon: const Icon(Icons.settings), onPressed: () {context.pushReplacement('/settings');}),
+          IconButton(icon: const Icon(Icons.store), onPressed: () {context.pushReplacement('/catalog');})
+        ],
       ),
       body: Container(
         color: Colors.yellow,
@@ -29,7 +32,6 @@ class MyCart extends StatelessWidget {
             ),
             const Divider(height: 4, color: Colors.black),
             _CartTotal(),
-            Footer(),
           ],
         ),
       ),
