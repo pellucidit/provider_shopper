@@ -5,7 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider_shopper/provider.dart';
+import 'package:provider_shopper/models/cart.dart';
 import '../models/device.dart';
 
 class MyCart extends ConsumerWidget {

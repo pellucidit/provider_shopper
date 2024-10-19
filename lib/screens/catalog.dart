@@ -5,9 +5,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:provider_shopper/models/cart.dart';
 import 'package:provider_shopper/models/catalog.dart';
+import 'package:provider_shopper/models/item.dart';
 import '../models/device.dart';
 
 
@@ -21,12 +21,13 @@ class MyCatalog extends ConsumerWidget {
         title: const Text('Catalog'),
         backgroundColor: ref.read(deviceProvider.notifier).getThemeAsColor(),
         actions: [
-          IconButton(icon: const Icon(Icons.settings), onPressed: () {context.pushReplacement('/settings');})
+            IconButton(icon: const Icon(Icons.settings), onPressed: () {context.pushReplacement('/settings');}),
+            IconButton(icon: const Icon(Icons.shopping_cart), onPressed: () => context.go('/catalog/cart')),
         ],
       ),
       body: CustomScrollView(
         slivers: [
-          _MyAppBar(),
+          // _MyAppBar(),
           const SliverToBoxAdapter(child: SizedBox(height: 12)),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -51,10 +52,12 @@ class _AddButton extends ConsumerWidget {
     // this widget unless that particular part of the model changes.
     //
     // This can lead to significant performance improvements.
-    var isInCart = context.select<CartModel, bool>(
-      // Here, we are only interested whether [item] is inside the cart.
-      (cart) => cart.items.contains(item),
-    );
+    bool isInCart = ref.read(cartModelProvider.notifier).hasItem(item);
+
+    // var isInCart = context.select<CartModel, bool>(
+    //   // Here, we are only interested whether [item] is inside the cart.
+    //   (cart) => cart.items.contains(item),
+    // );
 
     return TextButton(
       onPressed: isInCart
@@ -64,8 +67,9 @@ class _AddButton extends ConsumerWidget {
               // We are using context.read() here because the callback
               // is executed whenever the user taps the button. In other
               // words, it is executed outside the build method.
-              var cart = context.read<CartModel>();
-              cart.add(item);
+              ref.read(cartModelProvider.notifier).add(item);
+              // var cart = context.read<CartModel>();
+              // cart.add(item);
             },
       style: ButtonStyle(
         overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
@@ -105,11 +109,14 @@ class _MyListItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var item = context.select<CatalogModel, Item>(
-      // Here, we are only interested in the item at [index]. We don't care
-      // about any other change.
-      (catalog) => catalog.getByPosition(index),
-    );
+
+    final Item item = ref.read(catalogModelProvider.notifier).getByPosition(index);
+
+    // var item = context.select<CatalogModel, Item>(
+    //   // Here, we are only interested in the item at [index]. We don't care
+    //   // about any other change.
+    //   (catalog) => catalog.getByPosition(index),
+    // );
     var textTheme = Theme.of(context).textTheme.titleLarge;
 
     return Padding(

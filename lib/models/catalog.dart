@@ -2,7 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-import 'package:flutter/material.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'item.dart';
+
+part 'catalog.g.dart';
 
 /// A proxy of the catalog of items the user can buy.
 ///
@@ -11,7 +14,9 @@ import 'package:flutter/material.dart';
 ///
 /// For simplicity, the catalog is expected to be immutable (no products are
 /// expected to be added, removed or changed during the execution of the app).
-class CatalogModel {
+
+@riverpod
+class CatalogModel extends _$CatalogModel{
   static List<String> itemNames = [
     'Code Smell',
     'Control Flow',
@@ -30,6 +35,13 @@ class CatalogModel {
     'Currying',
   ];
 
+  @override
+  List<Item> build() {
+    return List<Item>.generate(itemNames.length, (i) {
+      return Item(i, itemNames[i]);
+    });
+  }
+
   /// Get item by [id].
   ///
   /// In this sample, the catalog is infinite, looping over [itemNames].
@@ -41,23 +53,4 @@ class CatalogModel {
     // is also its id.
     return getById(position);
   }
-}
-
-@immutable
-class Item {
-  final int id;
-  final String name;
-  final Color color;
-  final int price = 42;
-
-  Item(this.id, this.name)
-      // To make the sample app look nicer, each item is given one of the
-      // Material Design primary colors.
-      : color = Colors.primaries[id % Colors.primaries.length];
-
-  @override
-  int get hashCode => id;
-
-  @override
-  bool operator ==(Object other) => other is Item && other.id == id;
 }

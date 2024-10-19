@@ -4,8 +4,19 @@
 
 // import 'package:flutter/foundation.dart';
 import 'package:provider_shopper/models/catalog.dart';
+import 'package:provider_shopper/models/item.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-class CartModel {
+part 'cart.g.dart';
+
+@riverpod
+class CartModel extends _$CartModel{
+
+  @override 
+  CartModel build() {
+    return this;
+  }
+
   /// The private field backing [catalog].
   late CatalogModel _catalog;
 
@@ -40,5 +51,9 @@ class CartModel {
     _itemIds.remove(item.id);
     // Don't forget to tell dependent widgets to rebuild _every time_
     // you change the model.
+  }
+
+  bool hasItem(Item item) {
+    return _itemIds.contains(item.id);
   }
 }
