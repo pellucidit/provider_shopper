@@ -3,17 +3,20 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../models/device.dart';
 
 
-class MyLogin extends StatelessWidget {
+class MyLogin extends ConsumerWidget {
   const MyLogin({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Login'),
+        backgroundColor: ref.read(deviceProvider.notifier).getThemeAsColor(),
         actions: [
           IconButton(icon: const Icon(Icons.settings), onPressed: () {context.pushReplacement('/settings');})
         ],

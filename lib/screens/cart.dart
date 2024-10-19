@@ -6,15 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider_shopper/provider.dart';
+import '../models/device.dart';
 
-class MyCart extends StatelessWidget {
+class MyCart extends ConsumerWidget {
   const MyCart({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cart'),
+        backgroundColor: ref.read(deviceProvider.notifier).getThemeAsColor(),
         actions: [
           IconButton(icon: const Icon(Icons.settings), onPressed: () {context.pushReplacement('/settings');}),
           IconButton(icon: const Icon(Icons.store), onPressed: () {context.pushReplacement('/catalog');})

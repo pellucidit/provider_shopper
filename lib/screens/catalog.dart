@@ -3,20 +3,23 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_shopper/models/cart.dart';
 import 'package:provider_shopper/models/catalog.dart';
+import '../models/device.dart';
 
 
-class MyCatalog extends StatelessWidget {
+class MyCatalog extends ConsumerWidget {
   const MyCatalog({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Catalog'),
+        backgroundColor: ref.read(deviceProvider.notifier).getThemeAsColor(),
         actions: [
           IconButton(icon: const Icon(Icons.settings), onPressed: () {context.pushReplacement('/settings');})
         ],
@@ -35,13 +38,13 @@ class MyCatalog extends StatelessWidget {
   }
 }
 
-class _AddButton extends StatelessWidget {
+class _AddButton extends ConsumerWidget {
   final Item item;
 
   const _AddButton({required this.item});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // The context.select() method will let you listen to changes to
     // a *part* of a model. You define a function that "selects" (i.e. returns)
     // the part you're interested in, and the provider package will not rebuild
@@ -95,13 +98,13 @@ class _MyAppBar extends StatelessWidget {
   }
 }
 
-class _MyListItem extends StatelessWidget {
+class _MyListItem extends ConsumerWidget {
   final int index;
 
   const _MyListItem(this.index);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var item = context.select<CatalogModel, Item>(
       // Here, we are only interested in the item at [index]. We don't care
       // about any other change.
