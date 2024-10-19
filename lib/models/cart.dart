@@ -18,7 +18,7 @@ class CartModel extends _$CartModel{
   }
 
   /// The private field backing [catalog].
-  late CatalogModel _catalog;
+  late CatalogModel _catalog = ref.read(catalogModelProvider.notifier).getCatalog();
 
   /// Internal, private state of the cart. Stores the ids of each item.
   final List<int> _itemIds = [];
@@ -31,6 +31,7 @@ class CartModel extends _$CartModel{
     // Notify listeners, in case the new catalog provides information
     // different from the previous one. For example, availability of an item
     // might have changed.
+    ref.notifyListeners();
   }
 
   /// List of items in the cart.

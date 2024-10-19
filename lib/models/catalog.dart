@@ -42,6 +42,10 @@ class CatalogModel extends _$CatalogModel{
     });
   }
 
+  CatalogModel getCatalog() {
+    return this;
+  }
+
   /// Get item by [id].
   ///
   /// In this sample, the catalog is infinite, looping over [itemNames].

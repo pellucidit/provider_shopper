@@ -16,6 +16,9 @@ class MyCatalog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
+    // ref.read(cartModelProvider.notifier).catalog = ref.read(catalogModelProvider.notifier).getCatalog();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Catalog'),
