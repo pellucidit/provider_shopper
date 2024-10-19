@@ -14,13 +14,6 @@ packages:
     description: dart
     source: sdk
     version: "0.3.2"
-  analysis_defaults:
-    dependency: "direct dev"
-    description:
-      path: "../analysis_defaults"
-      relative: true
-    source: path
-    version: "0.0.0"
   analyzer:
     dependency: transitive
     description:
@@ -227,7 +220,7 @@ packages:
     source: sdk
     version: "0.0.0"
   flutter_lints:
-    dependency: transitive
+    dependency: "direct dev"
     description:
       name: flutter_lints
       sha256: "5398f14efa795ffb7a33e9b6a08798b26a180edac4ad7db3f231e40f82ce11e1"

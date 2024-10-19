@@ -42,3 +42,25 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# macOS specific artifacts
+/macos/Flutter/ephemeral/
+/macos/Flutter/Flutter.podspec
+/macos/Flutter/GeneratedPluginRegistrant.swift
+/macos/Pods/
+/macos/build/
+/macos/Flutter/Flutter.xcworkspace/
+/macos/Flutter/Flutter.xcodeproj/
+/macos/Flutter/Flutter.framework/
+/macos/Flutter/App.framework/
+/macos/Flutter/flutter_export_environment.sh
+
+# Windows specific artifacts
+/windows/Flutter/ephemeral/
+/windows/build/
+/windows/runner/Debug/
+/windows/runner/Release/
+/windows/runner/GeneratedPluginRegistrant.cc
+/windows/flutter/GeneratedPluginRegistrant.h
+/windows/flutter/GeneratedPluginRegistrant.cpp
+/windows/flutter/flutter_export_environment.cmake
