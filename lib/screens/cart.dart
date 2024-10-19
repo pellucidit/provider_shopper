@@ -50,7 +50,8 @@ class _CartList extends ConsumerWidget {
     // when it changes).
     
     CartModel cart = ref.watch(cartModelProvider.notifier);
-
+    print(cart.items);
+    
     return ListView.builder(
       itemCount: cart.items.length,
       itemBuilder: (context, index) => ListTile(

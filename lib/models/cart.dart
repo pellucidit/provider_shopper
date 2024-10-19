@@ -46,6 +46,7 @@ class CartModel extends _$CartModel{
     // This line tells [Model] that it should rebuild the widgets that
     // depend on it.
     ref.notifyListeners();
+    print(_itemIds);
   }
 
   void remove(Item item) {

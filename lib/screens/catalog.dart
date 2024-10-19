@@ -66,7 +66,7 @@ class _AddButton extends ConsumerWidget {
               // We are using context.read() here because the callback
               // is executed whenever the user taps the button. In other
               // words, it is executed outside the build method.
-              ref.read(cartModelProvider.notifier).add(item);
+              ref.watch(cartModelProvider.notifier).add(item);
               // var cart = context.read<CartModel>();
               // cart.add(item);
             },
