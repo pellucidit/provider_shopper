@@ -6,19 +6,25 @@ part 'device.g.dart';
 
 @Riverpod(keepAlive: true)
 class Device extends _$Device {
+  Color theme = Color(int.parse("FFffffff", radix: 16));
 
   @override
   Color build() { 
-    return Color(int.parse("FFffffff", radix: 16));
+    return theme;
   }
 
   void setTheme(String theme) {
-    state = Color(int.parse("ff$theme", radix: 16));
-    print("Changed theme to $theme");
+    try{
+      this.theme = Color(int.parse("ff$theme", radix: 16));
+    }
+    catch(e){
+      this.theme = Colors.white;
+    }
+    
+    ref.notifyListeners();
   }
 
   Color getThemeAsColor() {
-    print("theme is $state");
-    return state;
+    return theme;
   }
 }

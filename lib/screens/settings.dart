@@ -8,13 +8,13 @@ class Settings extends ConsumerWidget{
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Device device = ref.watch(deviceProvider.notifier);
+    ref.watch(deviceProvider);
     return Scaffold(
       body: Center(
         child: Column(
           children: [
             Card(
-              color: device.getThemeAsColor(),
+              color: ref.read(deviceProvider.notifier).getThemeAsColor(),
               child: const Text('Settings'),
             ),
             TextField(

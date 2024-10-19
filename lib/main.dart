@@ -42,7 +42,7 @@ void setupWindow() {
 
 GoRouter router() {
   return GoRouter(
-    initialLocation: '/login',
+    initialLocation: '/settings',
     routes: [
       GoRoute(
         path: '/login',
