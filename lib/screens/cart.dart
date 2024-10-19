@@ -49,7 +49,7 @@ class _CartList extends ConsumerWidget {
     // to rebuild this widget when CartModel notifies listeners (in other words,
     // when it changes).
     
-    var cart = ref.watch(cartModelProvider);
+    CartModel cart = ref.watch(cartModelProvider.notifier);
 
     return ListView.builder(
       itemCount: cart.items.length,
@@ -90,7 +90,7 @@ class _CartTotal extends StatelessWidget {
             // the rest of the widgets in this build method.
             Consumer(
                 builder: (context, ref, child) {
-                    final cart = ref.watch(cartModelProvider);
+                    final cart = ref.watch(cartModelProvider.notifier);
                     return Text('\$${cart.totalPrice}', style: hugeStyle);
                 },
             ),

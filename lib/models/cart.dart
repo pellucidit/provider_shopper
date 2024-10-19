@@ -13,8 +13,8 @@ part 'cart.g.dart';
 class CartModel extends _$CartModel{
 
   @override 
-  CartModel build() {
-    return this;
+  List<Item> build() {
+    return [];
   }
 
   /// The private field backing [catalog].
@@ -42,8 +42,6 @@ class CartModel extends _$CartModel{
 
   /// Adds [item] to cart. This is the only way to modify the cart from outside.
   void add(Item item) {
-    print("Adding $item to cart");
-    print(item.name);
     _itemIds.add(item.id);
     // This line tells [Model] that it should rebuild the widgets that
     // depend on it.
