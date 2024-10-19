@@ -4,11 +4,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider_shopper/models/cart.dart';
 import 'package:provider_shopper/models/catalog.dart';
-import '../common/footer.dart';
-
 
 class MyCatalog extends StatelessWidget {
   const MyCatalog({super.key});
@@ -24,41 +22,28 @@ class MyCatalog extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
                 (context, index) => _MyListItem(index)),
           ),
-          Footer(),
+          // Footer(),
         ],
       ),
     );
   }
 }
 
-class _AddButton extends StatelessWidget {
+class _AddButton extends ConsumerWidget {
   final Item item;
 
   const _AddButton({required this.item});
 
   @override
-  Widget build(BuildContext context) {
-    // The context.select() method will let you listen to changes to
-    // a *part* of a model. You define a function that "selects" (i.e. returns)
-    // the part you're interested in, and the provider package will not rebuild
-    // this widget unless that particular part of the model changes.
-    //
-    // This can lead to significant performance improvements.
-    var isInCart = context.select<CartModel, bool>(
-      // Here, we are only interested whether [item] is inside the cart.
-      (cart) => cart.items.contains(item),
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    var isInCart =
+        ref.watch(cartModelProvider.select((cart) => cart.contains(item)));
 
     return TextButton(
       onPressed: isInCart
           ? null
           : () {
-              // If the item is not in cart, we let the user add it.
-              // We are using context.read() here because the callback
-              // is executed whenever the user taps the button. In other
-              // words, it is executed outside the build method.
-              var cart = context.read<CartModel>();
-              cart.add(item);
+              ref.read(cartModelProvider.notifier).add(item);
             },
       style: ButtonStyle(
         overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
@@ -91,18 +76,14 @@ class _MyAppBar extends StatelessWidget {
   }
 }
 
-class _MyListItem extends StatelessWidget {
+class _MyListItem extends ConsumerWidget {
   final int index;
-
   const _MyListItem(this.index);
-
   @override
-  Widget build(BuildContext context) {
-    var item = context.select<CatalogModel, Item>(
-      // Here, we are only interested in the item at [index]. We don't care
-      // about any other change.
-      (catalog) => catalog.getByPosition(index),
-    );
+  Widget build(BuildContext context, WidgetRef ref) {
+    final catalog = ref.read(catalogModelProvider.notifier);
+    final item = catalog.getByPosition(index);
+
     var textTheme = Theme.of(context).textTheme.titleLarge;
 
     return Padding(

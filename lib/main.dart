@@ -42,7 +42,7 @@ void setupWindow() {
 
 GoRouter router() {
   return GoRouter(
-    initialLocation: '/login',
+    initialLocation: '/catalog',
     routes: [
       GoRoute(
         path: '/login',
@@ -72,10 +72,10 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     // Using MultiProvider is convenient when providing multiple objects.
-      return MaterialApp.router(
-        title: 'Provider Demo',
-        theme: appTheme,
-        routerConfig: router(),
-      );
+    return MaterialApp.router(
+      title: 'Provider Demo',
+      theme: appTheme,
+      routerConfig: router(),
+    );
   }
 }

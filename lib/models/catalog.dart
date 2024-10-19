@@ -1,17 +1,13 @@
 // Copyright 2019 The Flutter team. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter/material.dart';
 
-/// A proxy of the catalog of items the user can buy.
-///
-/// In a real app, this might be backed by a backend and cached on device.
-/// In this sample app, the catalog is procedurally generated and infinite.
-///
-/// For simplicity, the catalog is expected to be immutable (no products are
-/// expected to be added, removed or changed during the execution of the app).
-class CatalogModel {
+part 'catalog.g.dart';
+
+@riverpod
+class CatalogModel extends _$CatalogModel {
   static List<String> itemNames = [
     'Code Smell',
     'Control Flow',
@@ -29,6 +25,11 @@ class CatalogModel {
     'Bit Shift',
     'Currying',
   ];
+
+  @override
+  List<Item> build() {
+    return List.generate(itemNames.length, (index) => getById(index));
+  }
 
   /// Get item by [id].
   ///

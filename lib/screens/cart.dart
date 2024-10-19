@@ -4,8 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider_shopper/provider.dart';
-import '../common/footer.dart';
+import 'package:provider_shopper/models/cart.dart';
 
 class MyCart extends StatelessWidget {
   const MyCart({super.key});
@@ -29,7 +28,6 @@ class MyCart extends StatelessWidget {
             ),
             const Divider(height: 4, color: Colors.black),
             _CartTotal(),
-            Footer(),
           ],
         ),
       ),
@@ -41,23 +39,20 @@ class _CartList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var itemNameStyle = Theme.of(context).textTheme.titleLarge;
-    // This gets the current state of CartModel and also tells Flutter
-    // to rebuild this widget when CartModel notifies listeners (in other words,
-    // when it changes).
     var cart = ref.watch(cartModelProvider);
 
     return ListView.builder(
-      itemCount: cart.items.length,
+      itemCount: cart.length,
       itemBuilder: (context, index) => ListTile(
         leading: const Icon(Icons.done),
         trailing: IconButton(
           icon: const Icon(Icons.remove_circle_outline),
           onPressed: () {
-            cart.remove(cart.items[index]);
+            ref.read(cartModelProvider.notifier).remove(cart[index]);
           },
         ),
         title: Text(
-          cart.items[index].name,
+          cart[index].name,
           style: itemNameStyle,
         ),
       ),
@@ -65,11 +60,12 @@ class _CartList extends ConsumerWidget {
   }
 }
 
-class _CartTotal extends StatelessWidget {
+class _CartTotal extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     var hugeStyle =
         Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 48);
+    final cart = ref.watch(cartModelProvider.notifier);
 
     return SizedBox(
       height: 200,
@@ -77,18 +73,7 @@ class _CartTotal extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // Another way to listen to a model's change is to include
-            // the Consumer widget. This widget will automatically listen
-            // to CartModel and rerun its builder on every change.
-            //
-            // The important thing is that it will not rebuild
-            // the rest of the widgets in this build method.
-            Consumer(
-                builder: (context, ref, child) {
-                    final cart = ref.watch(cartModelProvider);
-                    return Text('\$${cart.totalPrice}', style: hugeStyle);
-                },
-            ),
+            Text('\$${cart.totalPrice}', style: hugeStyle),
             const SizedBox(width: 24),
             FilledButton(
               onPressed: () {

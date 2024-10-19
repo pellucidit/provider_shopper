@@ -4,8 +4,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import '../common/footer.dart';
-
+//import '../common/footer.dart';
 
 class MyLogin extends StatelessWidget {
   const MyLogin({super.key});
@@ -46,7 +45,7 @@ class MyLogin extends StatelessWidget {
                 ),
                 child: const Text('ENTER'),
               ),
-              Footer(),
+              // Footer(),
             ],
           ),
         ),
