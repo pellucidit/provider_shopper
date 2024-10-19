@@ -58,7 +58,6 @@ class _AddButton extends ConsumerWidget {
     //   // Here, we are only interested whether [item] is inside the cart.
     //   (cart) => cart.items.contains(item),
     // );
-
     return TextButton(
       onPressed: isInCart
           ? null

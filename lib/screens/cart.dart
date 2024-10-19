@@ -48,6 +48,7 @@ class _CartList extends ConsumerWidget {
     // This gets the current state of CartModel and also tells Flutter
     // to rebuild this widget when CartModel notifies listeners (in other words,
     // when it changes).
+    
     var cart = ref.watch(cartModelProvider);
 
     return ListView.builder(
