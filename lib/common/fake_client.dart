@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'fake_client.g.dart';
 
+// ignore: invalid_annotation_target
 @JsonLiteral('fake_products.json')
 final _items = _$_itemsJsonLiteral;
 
