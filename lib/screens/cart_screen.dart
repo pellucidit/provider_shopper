@@ -46,6 +46,9 @@ class _CartList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var itemNameStyle = Theme.of(context).textTheme.titleLarge;
     var cart = ref.watch(cartProvider);
+    void removeItem(int index) {
+      ref.read(cartProvider.notifier).remove(cart[index]);
+    }
 
     return ListView.builder(
       itemCount: cart.length,
@@ -53,9 +56,7 @@ class _CartList extends ConsumerWidget {
         leading: const Icon(Icons.done),
         trailing: IconButton(
           icon: const Icon(Icons.remove_circle_outline),
-          onPressed: () {
-            ref.read(cartProvider.notifier).remove(cart[index]);
-          },
+          onPressed: () => removeItem(index),
         ),
         title: Text(
           cart[index].name,
