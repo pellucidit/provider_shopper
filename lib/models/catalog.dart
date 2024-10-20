@@ -1,20 +1,24 @@
 // Copyright 2019 The Flutter team. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:provider_shopper/common/client.dart';
 
 part 'catalog.g.dart';
 
 @riverpod
 class Catalog extends _$Catalog {
-  static List<String> itemNames = [
+  List<String> itemNames = [
     'Orange',
     'Guava',
     'Banana',
     'Apple',
     'Pear',
   ];
+
+  final targetClient = Dio();
 
   @override
   List<Item> build() {
@@ -27,6 +31,15 @@ class Catalog extends _$Catalog {
   /// Get item by its position in the catalog.
   Item getByPosition(int position) {
     return getById(position);
+  }
+
+  Future<void> refresh() async {
+    List<Item> items = await ItemAccess(client: targetClient).getItems();
+    if (items.isEmpty) {
+      return;
+    }
+    itemNames = items.map((item) => item.name).toList();
+    state = List.generate(itemNames.length, (index) => getById(index));
   }
 }
 

@@ -10,11 +10,12 @@ import 'package:provider_shopper/models/cart.dart';
 import 'package:provider_shopper/models/catalog.dart';
 import 'package:provider_shopper/models/device.dart';
 
-class CatalogScreen extends StatelessWidget {
+class CatalogScreen extends ConsumerWidget {
   const CatalogScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(catalogProvider);
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -43,6 +44,10 @@ class _CatalogScreenAppBar extends ConsumerWidget {
       ),
       floating: true,
       actions: [
+        IconButton(
+          icon: const Icon(Icons.update),
+          onPressed: () => ref.read(catalogProvider.notifier).refresh(),
+        ),
         ShoppingCartButton(),
         IconButton(
           icon: const Icon(Icons.settings),
@@ -93,7 +98,7 @@ class _MyListItem extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     ref.watch(cartProvider);
-    final item = ref.read(catalogProvider.notifier).getByPosition(index);
+    final Item item = ref.read(catalogProvider.notifier).getByPosition(index);
 
     var textTheme = Theme.of(context).textTheme.titleLarge;
 

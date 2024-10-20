@@ -18,32 +18,6 @@ class Cart extends _$Cart {
     return _itemIds.map((id) => _catalog.getById(id)).toList();
   }
 
-  /// If CartState is in use
-  /*
-  @override
-  CartState build() {
-    _catalog = ref.watch(catalogProvider.notifier);
-    final items = _itemIds.map((id) => _catalog.getById(id)).toList();
-    return CartState(items: items);
-  }
-
-  set catalog(Catalog newCatalog) {
-    _catalog = newCatalog;
-    final items = _itemIds.map((id) => _catalog.getById(id)).toList();
-    state = CartState(items: items);
-  }
-  void add(Item item) {
-    _itemIds.add(item.id);
-    final items = _itemIds.map((id) => _catalog.getById(id)).toList();
-    state = CartState(items: items);
-  }
-  void remove(Item item) {
-    _itemIds.remove(item.id);
-    final items = _itemIds.map((id) => _catalog.getById(id)).toList();
-    state = CartState(items: items);
-  }
-  */
-
   /// The current catalog. Used to construct items from numeric ids.
   Catalog get catalog => _catalog;
 
@@ -77,12 +51,4 @@ class Cart extends _$Cart {
     _itemIds.remove(item.id);
     state = _itemIds.map((id) => _catalog.getById(id)).toList();
   }
-}
-
-/// Todo Consider adding CartState
-class CartState {
-  final List<Item> items;
-  final int count;
-
-  CartState({required this.items}) : count = items.length;
 }
