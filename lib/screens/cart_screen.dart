@@ -5,15 +5,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:provider_shopper/models/cart.dart';
+import 'package:provider_shopper/models/device.dart';
 
-class MyCart extends StatelessWidget {
-  const MyCart({super.key});
+class CartScreen extends ConsumerWidget {
+  const CartScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final titleColor = ref.watch(deviceProvider).color;
+    final name = ref.watch(deviceProvider).name;
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cart', style: Theme.of(context).textTheme.displayLarge),
+        title: Text('$name Cart',
+            style: Theme.of(context).textTheme.displayLarge!.copyWith(
+                  color: titleColor, // Use the color from the device state
+                )),
         backgroundColor: Colors.white,
       ),
       body: Container(
@@ -65,7 +71,10 @@ class _CartTotal extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     var hugeStyle =
         Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 48);
-    final cart = ref.watch(cartModelProvider.notifier);
+    // Watch the cart state to trigger a rebuild when the cart changes
+    ref.watch(cartModelProvider);
+    // Get total price from the CartModel, which encapsulates the logic
+    final totalPrice = ref.read(cartModelProvider.notifier).totalPrice;
 
     return SizedBox(
       height: 200,
@@ -73,7 +82,7 @@ class _CartTotal extends ConsumerWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text('\$${cart.totalPrice}', style: hugeStyle),
+            Text('\$$totalPrice', style: hugeStyle),
             const SizedBox(width: 24),
             FilledButton(
               onPressed: () {

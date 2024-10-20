@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'package:provider_shopper/models/catalog.dart';
-// import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'cart.g.dart';
@@ -15,6 +14,7 @@ class CartModel extends _$CartModel {
 
   @override
   List<Item> build() {
+    _catalog = ref.watch(catalogModelProvider.notifier);
     return _itemIds.map((id) => _catalog.getById(id)).toList();
   }
 

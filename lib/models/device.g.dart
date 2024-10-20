@@ -6,11 +6,11 @@ part of 'device.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$deviceHash() => r'b1cadb3700835a09026d6a458b00b149ac47a271';
+String _$deviceHash() => r'eabe5d5a5944abfc913a4bb801686c398bfbad02';
 
 /// See also [Device].
 @ProviderFor(Device)
-final deviceProvider = NotifierProvider<Device, Color>.internal(
+final deviceProvider = NotifierProvider<Device, User>.internal(
   Device.new,
   name: r'deviceProvider',
   debugGetCreateSourceHash:
@@ -19,6 +19,6 @@ final deviceProvider = NotifierProvider<Device, Color>.internal(
   allTransitiveDependencies: null,
 );
 
-typedef _$Device = Notifier<Color>;
+typedef _$Device = Notifier<User>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

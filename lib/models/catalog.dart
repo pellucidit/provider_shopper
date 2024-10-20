@@ -1,8 +1,8 @@
 // Copyright 2019 The Flutter team. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:flutter/material.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'catalog.g.dart';
 
@@ -14,16 +14,6 @@ class CatalogModel extends _$CatalogModel {
     'Interpreter',
     'Recursion',
     'Sprint',
-    'Heisenbug',
-    'Spaghetti',
-    'Hydra Code',
-    'Off-By-One',
-    'Scope',
-    'Callback',
-    'Closure',
-    'Automata',
-    'Bit Shift',
-    'Currying',
   ];
 
   @override
@@ -32,14 +22,10 @@ class CatalogModel extends _$CatalogModel {
   }
 
   /// Get item by [id].
-  ///
-  /// In this sample, the catalog is infinite, looping over [itemNames].
   Item getById(int id) => Item(id, itemNames[id % itemNames.length]);
 
   /// Get item by its position in the catalog.
   Item getByPosition(int position) {
-    // In this simplified case, an item's position in the catalog
-    // is also its id.
     return getById(position);
   }
 }

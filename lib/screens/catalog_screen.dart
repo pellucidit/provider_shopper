@@ -3,13 +3,14 @@
 // found in the LICENSE file.
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider_shopper/models/cart.dart';
 import 'package:provider_shopper/models/catalog.dart';
+import 'package:provider_shopper/models/device.dart';
 
-class MyCatalog extends StatelessWidget {
-  const MyCatalog({super.key});
+class CatalogScreen extends StatelessWidget {
+  const CatalogScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,16 +61,26 @@ class _AddButton extends ConsumerWidget {
   }
 }
 
-class _MyAppBar extends StatelessWidget {
+class _MyAppBar extends ConsumerWidget {
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final titleColor = ref.watch(deviceProvider).color;
     return SliverAppBar(
-      title: Text('Catalog', style: Theme.of(context).textTheme.displayLarge),
+      title: Text(
+        'Catalog',
+        style: Theme.of(context).textTheme.displayLarge!.copyWith(
+              color: titleColor, // Use the color from the device state
+            ),
+      ),
       floating: true,
       actions: [
         IconButton(
           icon: const Icon(Icons.shopping_cart),
           onPressed: () => context.go('/catalog/cart'),
+        ),
+        IconButton(
+          icon: const Icon(Icons.settings),
+          onPressed: () => context.go('/settings'),
         ),
       ],
     );
