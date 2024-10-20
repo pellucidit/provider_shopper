@@ -5,6 +5,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider_shopper/common/shopping_cart_button.dart';
 import 'package:provider_shopper/models/cart.dart';
 import 'package:provider_shopper/models/catalog.dart';
 import 'package:provider_shopper/models/device.dart';
@@ -33,8 +34,6 @@ class _CatalogScreenAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final titleColor = ref.watch(deviceProvider).color;
-    ref.watch(cartProvider);
-    final cartItemCount = ref.watch(cartProvider.notifier).count;
     return SliverAppBar(
       title: Text(
         'Catalog',
@@ -44,30 +43,12 @@ class _CatalogScreenAppBar extends ConsumerWidget {
       ),
       floating: true,
       actions: [
-        _ShoppingCartButton(cartItemCount: cartItemCount),
+        ShoppingCartButton(),
         IconButton(
           icon: const Icon(Icons.settings),
           onPressed: () => context.go('/settings'),
         ),
       ],
-    );
-  }
-}
-
-class _ShoppingCartButton extends StatelessWidget {
-  final int cartItemCount;
-
-  const _ShoppingCartButton({required this.cartItemCount, super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Badge.count(
-      count: cartItemCount, // The count to display in the badge
-      alignment: Alignment.topCenter, // Positioning of the badge
-      child: IconButton(
-        icon: const Icon(Icons.shopping_cart),
-        onPressed: () => context.go('/catalog/cart'),
-      ),
     );
   }
 }

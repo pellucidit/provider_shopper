@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider_shopper/common/setting_field.dart';
+import 'package:provider_shopper/common/shopping_cart_button.dart';
 import 'package:provider_shopper/models/device.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -10,7 +11,7 @@ class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _MyAppBar(),
+      appBar: _SettingsScreenAppBar(),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: ListView(
@@ -27,7 +28,8 @@ class SettingsScreen extends StatelessWidget {
   }
 }
 
-class _MyAppBar extends ConsumerWidget implements PreferredSizeWidget {
+class _SettingsScreenAppBar extends ConsumerWidget
+    implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final titleColor = ref.watch(deviceProvider).color;
@@ -43,10 +45,7 @@ class _MyAppBar extends ConsumerWidget implements PreferredSizeWidget {
           icon: const Icon(Icons.home),
           onPressed: () => context.go('/catalog'),
         ),
-        IconButton(
-          icon: const Icon(Icons.shopping_cart),
-          onPressed: () => context.go('/catalog/cart'),
-        ),
+        ShoppingCartButton(),
         IconButton(
           icon: const Icon(Icons.logout),
           onPressed: () => context.go('/login'),
