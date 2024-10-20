@@ -7,13 +7,13 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'catalog.g.dart';
 
 @riverpod
-class CatalogModel extends _$CatalogModel {
+class Catalog extends _$Catalog {
   static List<String> itemNames = [
-    'Code Smell',
-    'Control Flow',
-    'Interpreter',
-    'Recursion',
-    'Sprint',
+    'Orange',
+    'Guava',
+    'Banana',
+    'Apple',
+    'Pear',
   ];
 
   @override

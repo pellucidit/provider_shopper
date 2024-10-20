@@ -7,15 +7,15 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_shopper/models/cart.dart';
 import 'package:provider_shopper/models/catalog.dart';
-import 'package:provider_shopper/screens/cart.dart';
+import 'package:provider_shopper/screens/cart_screen.dart';
 
-CartModel? cartModel;
-CatalogModel? catalogModel;
+Cart? cartModel;
+Catalog? catalogModel;
 Widget createCartScreen() => MultiProvider(
       providers: [
-        Provider(create: (context) => CatalogModel()),
-        ChangeNotifierProxyProvider<CatalogModel, CartModel>(
-          create: (context) => CartModel(),
+        Provider(create: (context) => Catalog()),
+        ChangeNotifierProxyProvider<Catalog, Cart>(
+          create: (context) => Cart(),
           update: (context, catalog, cart) {
             catalogModel = catalog;
             cartModel = cart;

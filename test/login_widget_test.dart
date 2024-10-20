@@ -13,9 +13,9 @@ void main() {
   testWidgets('Login page Widget test', (tester) async {
     await tester.pumpWidget(MultiProvider(
       providers: [
-        Provider(create: (context) => CatalogModel()),
-        ChangeNotifierProxyProvider<CatalogModel, CartModel>(
-          create: (context) => CartModel(),
+        Provider(create: (context) => Catalog()),
+        ChangeNotifierProxyProvider<Catalog, Cart>(
+          create: (context) => Cart(),
           update: (context, catalog, cart) {
             cart!.catalog = catalog;
             return cart;

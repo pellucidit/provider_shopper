@@ -45,7 +45,7 @@ class _CartList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     var itemNameStyle = Theme.of(context).textTheme.titleLarge;
-    var cart = ref.watch(cartModelProvider);
+    var cart = ref.watch(cartProvider);
 
     return ListView.builder(
       itemCount: cart.length,
@@ -54,7 +54,7 @@ class _CartList extends ConsumerWidget {
         trailing: IconButton(
           icon: const Icon(Icons.remove_circle_outline),
           onPressed: () {
-            ref.read(cartModelProvider.notifier).remove(cart[index]);
+            ref.read(cartProvider.notifier).remove(cart[index]);
           },
         ),
         title: Text(
@@ -72,9 +72,9 @@ class _CartTotal extends ConsumerWidget {
     var hugeStyle =
         Theme.of(context).textTheme.displayLarge!.copyWith(fontSize: 48);
     // Watch the cart state to trigger a rebuild when the cart changes
-    ref.watch(cartModelProvider);
+    ref.watch(cartProvider);
     // Get total price from the CartModel, which encapsulates the logic
-    final totalPrice = ref.read(cartModelProvider.notifier).totalPrice;
+    final totalPrice = ref.read(cartProvider.notifier).totalPrice;
 
     return SizedBox(
       height: 200,

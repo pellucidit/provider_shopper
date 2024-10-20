@@ -23,40 +23,8 @@ class CatalogScreen extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
                 (context, index) => _MyListItem(index)),
           ),
-          // Footer(),
         ],
       ),
-    );
-  }
-}
-
-class _AddButton extends ConsumerWidget {
-  final Item item;
-
-  const _AddButton({required this.item});
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    var isInCart =
-        ref.watch(cartModelProvider.select((cart) => cart.contains(item)));
-
-    return TextButton(
-      onPressed: isInCart
-          ? null
-          : () {
-              ref.read(cartModelProvider.notifier).add(item);
-            },
-      style: ButtonStyle(
-        overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
-          if (states.contains(WidgetState.pressed)) {
-            return Theme.of(context).primaryColor;
-          }
-          return null; // Defer to the widget's default.
-        }),
-      ),
-      child: isInCart
-          ? const Icon(Icons.check, semanticLabel: 'ADDED')
-          : const Text('ADD'),
     );
   }
 }
@@ -65,6 +33,8 @@ class _MyAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final titleColor = ref.watch(deviceProvider).color;
+    ref.watch(cartProvider);
+    final cartItemCount = ref.read(cartProvider.notifier).count;
     return SliverAppBar(
       title: Text(
         'Catalog',
@@ -74,10 +44,7 @@ class _MyAppBar extends ConsumerWidget {
       ),
       floating: true,
       actions: [
-        IconButton(
-          icon: const Icon(Icons.shopping_cart),
-          onPressed: () => context.go('/catalog/cart'),
-        ),
+        _ShoppingCartButton(cartItemCount: cartItemCount),
         IconButton(
           icon: const Icon(Icons.settings),
           onPressed: () => context.go('/settings'),
@@ -87,13 +54,65 @@ class _MyAppBar extends ConsumerWidget {
   }
 }
 
+class _ShoppingCartButton extends StatelessWidget {
+  final int cartItemCount;
+
+  const _ShoppingCartButton({required this.cartItemCount, super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Badge.count(
+      count: cartItemCount, // The count to display in the badge
+      alignment: Alignment.topCenter, // Positioning of the badge
+      child: IconButton(
+        icon: const Icon(Icons.shopping_cart),
+        onPressed: () => context.go('/catalog/cart'),
+      ),
+    );
+  }
+}
+
+class CartItemActionButton extends ConsumerWidget {
+  final Item item;
+
+  const CartItemActionButton({super.key, required this.item});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch if the item is in the cart
+    final isItemInCart = ref.watch(cartProvider.notifier).isInCart(item);
+    void removeItem() {
+      ref.read(cartProvider.notifier).remove(item);
+    }
+
+    void addItem() {
+      ref.read(cartProvider.notifier).add(item);
+    }
+
+    return TextButton(
+      onPressed: isItemInCart ? removeItem : addItem,
+      style: ButtonStyle(
+        overlayColor: WidgetStateProperty.resolveWith<Color?>((states) {
+          if (states.contains(WidgetState.pressed)) {
+            return Theme.of(context).primaryColor;
+          }
+          return null; // Defer to the widget's default.
+        }),
+      ),
+      child: isItemInCart
+          ? const Icon(Icons.remove_circle_outline, semanticLabel: 'REMOVE')
+          : const Text('ADD'),
+    );
+  }
+}
+
 class _MyListItem extends ConsumerWidget {
   final int index;
   const _MyListItem(this.index);
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final catalog = ref.read(catalogModelProvider.notifier);
-    final item = catalog.getByPosition(index);
+    ref.watch(cartProvider);
+    final item = ref.read(catalogProvider.notifier).getByPosition(index);
 
     var textTheme = Theme.of(context).textTheme.titleLarge;
 
@@ -114,7 +133,7 @@ class _MyListItem extends ConsumerWidget {
               child: Text(item.name, style: textTheme),
             ),
             const SizedBox(width: 24),
-            _AddButton(item: item),
+            CartItemActionButton(item: item),
           ],
         ),
       ),

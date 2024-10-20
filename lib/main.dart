@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider_shopper/common/theme.dart';
-import 'package:provider_shopper/screens/cart.dart';
+import 'package:provider_shopper/screens/cart_screen.dart';
 import 'package:provider_shopper/screens/catalog_screen.dart';
-import 'package:provider_shopper/screens/login.dart';
-import 'package:provider_shopper/screens/settings.dart';
+import 'package:provider_shopper/screens/login_screen.dart';
+import 'package:provider_shopper/screens/settings_screen.dart';
 import 'package:window_size/window_size.dart';
 
 void main() {
@@ -41,11 +41,11 @@ void setupWindow() {
 
 GoRouter router() {
   return GoRouter(
-    initialLocation: '/login',
+    initialLocation: '/catalog',
     routes: [
       GoRoute(
         path: '/login',
-        builder: (context, state) => const MyLogin(),
+        builder: (context, state) => const LoginScreen(),
       ),
       GoRoute(
         path: '/catalog',

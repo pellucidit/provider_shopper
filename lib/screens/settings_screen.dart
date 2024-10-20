@@ -47,6 +47,10 @@ class _MyAppBar extends ConsumerWidget implements PreferredSizeWidget {
           icon: const Icon(Icons.shopping_cart),
           onPressed: () => context.go('/catalog/cart'),
         ),
+        IconButton(
+          icon: const Icon(Icons.logout),
+          onPressed: () => context.go('/login'),
+        ),
       ],
     );
   }

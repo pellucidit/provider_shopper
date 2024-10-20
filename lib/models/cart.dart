@@ -8,20 +8,20 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'cart.g.dart';
 
 @riverpod
-class CartModel extends _$CartModel {
-  late CatalogModel _catalog;
+class Cart extends _$Cart {
+  late Catalog _catalog;
   final List<int> _itemIds = [];
 
   @override
   List<Item> build() {
-    _catalog = ref.watch(catalogModelProvider.notifier);
+    _catalog = ref.watch(catalogProvider.notifier);
     return _itemIds.map((id) => _catalog.getById(id)).toList();
   }
 
   /// The current catalog. Used to construct items from numeric ids.
-  CatalogModel get catalog => _catalog;
+  Catalog get catalog => _catalog;
 
-  set catalog(CatalogModel newCatalog) {
+  set catalog(Catalog newCatalog) {
     _catalog = newCatalog;
     state = _itemIds.map((id) => _catalog.getById(id)).toList();
   }
@@ -29,9 +29,17 @@ class CartModel extends _$CartModel {
   /// List of items in the cart.
   List<Item> get items => state;
 
+  /// List count of items in the cart.
+  int get count => items.length;
+
   /// The current total price of all items.
   int get totalPrice =>
       items.fold(0, (total, current) => total + current.price);
+
+  /// Checks if [item] is in the cart
+  bool isInCart(Item item) {
+    return items.contains(item);
+  }
 
   /// Adds [item] to cart. This is the only way to modify the cart from outside.
   void add(Item item) {
