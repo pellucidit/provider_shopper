@@ -17,7 +17,7 @@ class CatalogScreen extends StatelessWidget {
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          _MyAppBar(),
+          _CatalogScreenAppBar(),
           const SliverToBoxAdapter(child: SizedBox(height: 12)),
           SliverList(
             delegate: SliverChildBuilderDelegate(
@@ -29,12 +29,12 @@ class CatalogScreen extends StatelessWidget {
   }
 }
 
-class _MyAppBar extends ConsumerWidget {
+class _CatalogScreenAppBar extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final titleColor = ref.watch(deviceProvider).color;
     ref.watch(cartProvider);
-    final cartItemCount = ref.read(cartProvider.notifier).count;
+    final cartItemCount = ref.watch(cartProvider.notifier).count;
     return SliverAppBar(
       title: Text(
         'Catalog',
@@ -72,10 +72,10 @@ class _ShoppingCartButton extends StatelessWidget {
   }
 }
 
-class CartItemActionButton extends ConsumerWidget {
+class _CartItemActionButton extends ConsumerWidget {
   final Item item;
 
-  const CartItemActionButton({super.key, required this.item});
+  const _CartItemActionButton({required this.item});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -133,7 +133,7 @@ class _MyListItem extends ConsumerWidget {
               child: Text(item.name, style: textTheme),
             ),
             const SizedBox(width: 24),
-            CartItemActionButton(item: item),
+            _CartItemActionButton(item: item),
           ],
         ),
       ),
