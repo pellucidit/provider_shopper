@@ -3,8 +3,9 @@
 // found in the LICENSE file.
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:provider_shopper/common/client.dart';
+import 'package:provider_shopper/common/fake_client.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'catalog.g.dart';
 
@@ -18,7 +19,8 @@ class Catalog extends _$Catalog {
     'Pear',
   ];
 
-  final targetClient = Dio();
+  // final targetClient = Dio();
+  final targetClient = FakeDio();
 
   @override
   List<Item> build() {
